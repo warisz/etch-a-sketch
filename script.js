@@ -32,7 +32,7 @@ function blackClick(){
 
 function changeClick(){
   clearGrid();
-  dimensions = prompt("Enter dimensions (one number - up to 64):");
+  dimensions = prompt("Enter dimensions (one number):", "e.g. 25");
   createGrid(dimensions);
   color = 'black';
 }
@@ -42,8 +42,8 @@ function createGrid(boxes){
         const div = document.createElement('div');
         div.setAttribute=('id', 'box');
         div.addEventListener("mouseover", changeColor);
-        div.style.width = divContainer.clientWidth/boxes + 'px';
-        div.style.height = divContainer.clientHeight/boxes + 'px';
+        div.style.width = 500/boxes + 'px';
+        div.style.height = 500/boxes + 'px';
         div.style.boxShadow = '0px 0px 0px 1px black inset';
         div.style.margin = '0px';
         div.style.padding = '0px';
