@@ -2,31 +2,46 @@ const divContainer = document.getElementById("divContainer");
 const randomButton = document.querySelector('#randColor');
 const blackButton = document.querySelector('#black');
 const eraseButton = document.querySelector('#erase');
+const clearButton = document.querySelector('#clear');
+const changeButton = document.querySelector('#dimensions');
 
+let random = false;
 let color = "black";
-createGrid(16);
+let dimensions = 16;
+createGrid(dimensions);
 
 randomButton.addEventListener('click', randomClick);
 blackButton.addEventListener('click', blackClick);
 eraseButton.addEventListener('click', eraseClick);
+clearButton.addEventListener('click', clearClick);
+changeButton.addEventListener('click', changeClick);
 
 function randomClick(){
-  color = `rgb(${Math.random()*256},${Math.random()*256},${Math.random()*256})`;
+  random = true;
 }
 
 function eraseClick(){
   color = "white";
+  random = false;
 }
 
 function blackClick(){
   color = "black";
+  random = false;
+}
+
+function changeClick(){
+  clearGrid();
+  dimensions = prompt("Enter dimensions (one number - up to 64):");
+  createGrid(dimensions);
+  color = 'black';
 }
 
 function createGrid(boxes){
     for(i=0; i<boxes*boxes; i++){
-        console.log(i);
         const div = document.createElement('div');
         div.setAttribute=('id', 'box');
+        div.addEventListener("mouseover", changeColor);
         div.style.width = divContainer.clientWidth/boxes + 'px';
         div.style.height = divContainer.clientHeight/boxes + 'px';
         div.style.boxShadow = '0px 0px 0px 1px black inset';
@@ -38,8 +53,20 @@ function createGrid(boxes){
   }
 }
 
-$("#box").hover(function(){
-  $(this).css("background-color", color);
-    }, function(){
-    $(this).css("background-color", color);
-});
+function changeColor(){
+  if(random){
+    color = `rgb(${Math.random()*256},${Math.random()*256},${Math.random()*256})`;
+  }
+  this.style.backgroundColor = color;
+}
+
+function clearGrid(){
+  while(divContainer.firstChild){
+    divContainer.removeChild(divContainer.firstChild);
+  }
+}
+
+function clearClick(){
+  clearGrid();
+  createGrid(dimensions);
+}
